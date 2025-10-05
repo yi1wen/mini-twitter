@@ -1,9 +1,21 @@
 import React, { useEffect, useRef, useCallback } from 'react';
 import { observer } from 'mobx-react-lite';
 import { debounce } from 'lodash';
+import './TweetList.css';
 // import { tweetStore } from '../stores/TweetStore';
-// import TweetItem from './TweetItem';
-
+import TweetItem from './TweetItem';
+const tweetStore = {
+  tweets: [
+  {
+    content: '这是一条推文',
+    avatar: '用户A',
+  },
+  {
+    content: '这是另一条推文',
+    avatar: '用户B',
+  },  
+],
+}
 const TweetList = () => {
   const observerRef = useRef<HTMLDivElement>(null);
   
@@ -36,13 +48,13 @@ const TweetList = () => {
   return (
     <div 
       ref={observerRef}
-      className="overflow-y-auto"
+      className="tweet-list"
       style={{ maxHeight: 'calc(100vh - 200px)' }}
     >
       <div className="space-y-2 p-1">
-        {/* {tweetStore.tweets.map(tweet => (
-          <TweetItem key={tweet.id} tweet={tweet} />
-        ))} */}
+        {tweetStore.tweets.map(tweet => (
+          <TweetItem key={tweet.content} tweet={tweet} />
+        ))}
       </div>
       
       {/* 加载中状态 */}
