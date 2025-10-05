@@ -1,13 +1,18 @@
 import { makeAutoObservable } from "mobx";
-export interface Post{
+
+export interface TweetItem {
     id: string;
+    /** 消息内容 */
     content: string;
+    /** 点赞数 */
     likes: number;
+    /** 是否点赞 */
     isLiked: boolean;
     timestamp: Date;
     avatar: string;
 }
-export class TweetStore {
+
+export class TweetItemStore {
     id: string;
     content: string;
     likes: number;
@@ -15,8 +20,8 @@ export class TweetStore {
     timestamp: Date;
     avatar: string;
 
-    constructor(post:Post) {
-        const {id,content,likes,isLiked,timestamp,avatar} = post
+    constructor(tweet: TweetItem) {
+        const { id, content, likes, isLiked, timestamp, avatar } = tweet
         this.id = id;
         this.content = content;
         this.likes = likes;

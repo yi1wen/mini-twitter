@@ -2,13 +2,12 @@ import { useEffect, useRef, useCallback } from 'react';
 import { observer } from 'mobx-react-lite';
 import { Empty, Space,Typography } from '@arco-design/web-react';
 import { IconLoading } from '@arco-design/web-react/icon';
-
 import { tweetListStore } from '../store/TweetListStore';
 import TweetItem from './TweetItem';
 import { debounce } from 'lodash';
 import './TweetList.css';
 
-const {Text} = Typography
+const { Text } = Typography
 
 const TweetList = () => {
     const observerRef = useRef<HTMLDivElement>(null);
@@ -16,19 +15,20 @@ const TweetList = () => {
     useEffect(() => {
         tweetListStore.loadTweets();
     }, []);
-    console.log(tweetListStore.tweets)
 
-    const handleScroll = useCallback(debounce(() => {
-        if (!observerRef.current) return;
-        const { scrollTop, scrollHeight, clientHeight } = observerRef.current;
-        if (scrollHeight - scrollTop - clientHeight < 20) {
-            tweetListStore.loadMoreTweets();
-        }
-    }, 100), []);
+    const handleScroll = useCallback(
+        debounce(() => {
+            if (!observerRef.current) return;
+            const { scrollTop, scrollHeight, clientHeight } = observerRef.current;
+            if (scrollHeight - scrollTop - clientHeight < 20) {
+                tweetListStore.loadMoreTweets();
+            }
+        }, 100)
+    , []);
 
     if (tweetListStore.tweets.length === 0 && !tweetListStore.isLoading) {
         return (
-            <div style={{ padding: '48px 0', textAlign: 'center' }}>
+            <div className='message-list-empty'>
                 <Empty 
                     description={
                         <Text>还没有推文，发布你的第一条推文吧！</Text>
@@ -40,17 +40,16 @@ const TweetList = () => {
 
   return (
     <div 
-      ref={observerRef}
-      className="tweet-list"
-      style={{ height: '100vh' }}
-      onScroll={handleScroll}
+        ref={observerRef}
+        className="message-list"
+        onScroll={handleScroll}
     >
-        <div className="space-y-2 p-1">
+        <div>
             {tweetListStore.tweets.map(tweet => (
-            <TweetItem key={tweet.content} tweet={tweet} />
+                <TweetItem key={tweet.id} tweet={tweet} />
             ))}
         </div>
-        <div style={{ textAlign: 'center', padding: '32px 0',height: '100px' }}>
+        <div className="message-list-end">
             {/* 加载中状态 */}
             {tweetListStore.isLoading && (
                 <Space size="medium">
@@ -59,10 +58,7 @@ const TweetList = () => {
             )}
             {/* 没有更多内容 */}
             {!tweetListStore.isLoading && !tweetListStore.hasMore && tweetListStore.tweets.length > 0 && (
-                <div style={{ 
-                    color: '#86909C',
-                    borderTop: '1px solid #e5e6eb'
-                }}>
+                <div className="message-list-no-more">
                     <Text>已经到底啦，没有更多内容了</Text>
                 </div>
             )}
