@@ -1,15 +1,12 @@
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { Avatar, Button } from '@arco-design/web-react';
-import { IconHeart, IconMessage, IconForward, IconEye } from '@arco-design/web-react/icon';
+import { IconHeart, IconMessage, IconEye } from '@arco-design/web-react/icon';
 import './TweetItem.css';
-// import { Tweet } from '../stores/TweetStore';
+import { TweetStore } from '../store/TweetStore';
 
 interface TweetItemProps {
-  tweet: {
-    content: string;
-    avatar: string;
-  }
+  tweet: TweetStore
 }
 
 const TweetItem = (
