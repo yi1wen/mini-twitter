@@ -3,6 +3,7 @@ import { observer } from 'mobx-react-lite';
 import { Button, Avatar, Divider, Typography, Message } from '@arco-design/web-react';
 import { inputStore } from '../store/InputStore';
 import './Input.css';
+import { IconClose } from '@arco-design/web-react/icon';
 
 const { Text } = Typography;
 
@@ -28,25 +29,31 @@ const Input = () => {
 
   return (
     <div className="input-container">
-      <div className="input-content">
-        <Avatar>你</Avatar>
-        <textarea
-          className="input-textarea"
-          placeholder="分享你的想法..."
-          rows={inputStore.textareaRows }
-          value={inputStore.content}
-          onChange={(e)=>{handleChange(e.target.value)}}
-      />
-      <Text className="input-char-count">{inputStore.content.length}/{inputStore.maxChars}</Text>
-      </div>
-      <Divider />
-      <Button
-        shape="round"
-        onClick={ handlePublish }
-        disabled={ !inputStore.content.trim() }
-      >
-        发布
-      </Button>
+        <Button
+            className="input-close"
+            shape="round"
+            onClick={ inputStore.clearInputState }
+            icon={<IconClose />}
+        />
+        <div className="input-content">
+            <Avatar>你</Avatar>
+            <textarea
+            className="input-textarea"
+            placeholder="分享你的想法..."
+            rows={inputStore.textareaRows }
+            value={inputStore.content}
+            onChange={(e)=>{handleChange(e.target.value)}}
+        />
+        <Text className="input-char-count">{inputStore.content.length}/{inputStore.maxChars}</Text>
+        </div>
+        <Divider />
+        <Button
+            shape="round"
+            onClick={ handlePublish }
+            disabled={ !inputStore.content.trim() }
+        >
+            发布
+        </Button>
       
     </div>
   );
