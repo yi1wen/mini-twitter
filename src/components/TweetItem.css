@@ -1,0 +1,24 @@
+.tweet-item {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.item-content {
+  display: flex;
+
+  align-items: center;
+  padding: 10px;
+}
+
+.item-text {
+    margin-left: 10px;
+}
+
+.item-actions {
+  display: flex;
+  margin-left: 60px;
+  margin-top: 10px;
+  justify-content: space-between;
+}
