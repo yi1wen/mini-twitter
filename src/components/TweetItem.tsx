@@ -1,5 +1,5 @@
 import { observer } from 'mobx-react-lite';
-import { Avatar, Button, Card, Space } from '@arco-design/web-react';
+import { Avatar, Button, Card, Space, Typography } from '@arco-design/web-react';
 import { IconHeart, IconMessage, IconEye, IconHeartFill } from '@arco-design/web-react/icon';
 import './TweetItem.css';
 import { TweetStore } from '../store/TweetStore';
@@ -21,7 +21,7 @@ const TweetItem = (
       
         <div className="item-content">
           <Avatar>{avatar}</Avatar>
-          <div className="item-text"><textarea value={content} readOnly rows={content.split('\n').length}></textarea></div>
+          <div className="item-text"><Typography.Text style={{ whiteSpace: 'pre-line' }}>{content}</Typography.Text></div>
         </div>
         <div className="item-actions">
           <Space>
