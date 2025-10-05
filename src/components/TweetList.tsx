@@ -14,7 +14,7 @@ const TweetList = () => {
     useEffect(() => {
         tweetListStore.loadTweets();
     }, []);
-  
+    console.log(tweetListStore.tweets)
     const handleScroll = useCallback(debounce(() => {
         if (!observerRef.current) return;
     
