@@ -12,8 +12,6 @@
 
 .input-textarea {
     flex: 1;
-    
-    
     margin-left: 10px;
 }
 
@@ -29,7 +27,7 @@
 
 
 
-.input-textarea-container {
+.input-content {
     width: 100%;
     display: flex;
 }
