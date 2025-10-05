@@ -1,8 +1,10 @@
 
 import { observer } from 'mobx-react-lite';
-import { Button, Avatar, Divider } from '@arco-design/web-react';
+import { Button, Avatar, Divider, Typography } from '@arco-design/web-react';
 import { inputStore } from '../store/TweetInputStore';
 import './TweetInput.css';
+
+const {Text} = Typography;
 
 const TweetInput = () => {
     const handleChange = (value: string) => {
@@ -25,6 +27,7 @@ const TweetInput = () => {
           value={inputStore.content}
           onChange={(e)=>{handleChange(e.target.value)}}
       />
+      <Text className="input-char-count">{inputStore.content.length}/{inputStore.maxChars}</Text>
       </div>
       <Divider style={{ height: '1px', margin: '10px 0', backgroundColor: '#ccc' }} />
       <Button

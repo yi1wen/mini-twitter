@@ -17,6 +17,16 @@
     margin-left: 10px;
 }
 
+.input-char-count {
+    color: #999;
+    font-size: 12px;
+    margin-top: 5px;
+    text-align: right;
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+}
+
 
 
 .input-textarea-container {

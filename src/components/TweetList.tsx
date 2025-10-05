@@ -1,6 +1,6 @@
 import { useEffect, useRef, useCallback } from 'react';
 import { observer } from 'mobx-react-lite';
-import { Empty, Space,Typography, } from '@arco-design/web-react';
+import { Empty, Space,Typography } from '@arco-design/web-react';
 import { IconLoading } from '@arco-design/web-react/icon';
 
 import { tweetListStore } from '../store/TweetListStore';

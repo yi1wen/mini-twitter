@@ -19,6 +19,7 @@ export class TweetInputStore {
 
     clearContent = () => {
         this.content = '';
+        this.textareaRows = 3;
     };
 
     get remainingChars() {
