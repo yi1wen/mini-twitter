@@ -7,24 +7,24 @@ class TweetListStore {
     isLoading: boolean = false;
     hasMore: boolean = true;
     page: number = 1;
-    itemsPerPage: number = 25;
+    count: number = 25;
     constructor() {
         makeAutoObservable(this);
     }
-    getInitialTweets = async () => {
+    getInitialTweets: () => Promise<TweetItemStore[]> = async () => {
         this.isLoading = true;
-        const res = await getTweets({page: this.page, count: this.itemsPerPage});
+        const res = await getTweets({page: this.page, count: this.count});
         this.page++;
         this.isLoading = false;
         return res.map(tweet => new TweetItemStore(tweet));
     }
-    loadTweets = async () => {
+    loadTweets: () => Promise<void> = async () => {
         this.tweets = await this.getInitialTweets();
     }
-    loadMoreTweets = async () => {
+    loadMoreTweets: () => Promise<void> = async () => {
         if (this.isLoading || !this.hasMore) return;
         this.isLoading = true;
-        const res = await getTweets({page: this.page, count: this.itemsPerPage});
+        const res = await getTweets({page: this.page, count: this.count});
         this.page++;
         const newTweets: TweetItemStore[] = res.map(tweet => new TweetItemStore(tweet));
         this.tweets = [...this.tweets, ...newTweets];

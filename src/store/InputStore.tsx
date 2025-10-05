@@ -23,8 +23,10 @@ export class InputStore {
 
     /** 重置输入框状态 */
     clearInputState = () => {
+        this.visible = false;
         this.content = '';
         this.textareaRows = 3;
+
     };
 
     /** 发布推文 */
@@ -42,7 +44,6 @@ export class InputStore {
                 return
             };
             this.clearInputState();
-            this.visible = false;
             successCallback?.();
     };
 
