@@ -5,6 +5,7 @@ export class TweetInputStore {
     content: string = '';
     maxChars: number = 280;
     textareaRows = 3;
+    visible: boolean = false;
     constructor() {
         makeAutoObservable(this);
     }
@@ -13,6 +14,7 @@ export class TweetInputStore {
         if (value.length <= this.maxChars) {
             this.content = value;
         }
+        this.textareaRows = Math.max(value.split('\n').length + 1, this.textareaRows, 3);
     };
 
     clearContent = () => {
@@ -25,10 +27,16 @@ export class TweetInputStore {
 
     publishTweet = () => {
         if (this.content.trim()) {
-        tweetListStore.publishTweet(this.content);
-        this.clearContent();
+            tweetListStore.publishTweet(this.content);
+            this.clearContent();
+            this.visible = false;
         }
     };
+
+    toggleVisible = () => {
+        this.visible = !this.visible;
+    
+    }
 }
 
 // 创建输入框存储实例

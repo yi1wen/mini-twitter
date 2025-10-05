@@ -2,13 +2,10 @@
   display: flex;
   flex-direction: column;
   padding: 10px;
-  border-bottom: 1px solid #f0f0f0;
 }
 
 .item-content {
   display: flex;
-
-  align-items: center;
   padding: 10px;
 }
 
@@ -21,4 +18,16 @@
   margin-left: 60px;
   margin-top: 10px;
   justify-content: space-between;
+}
+
+.card-custom-hover-style {
+    border-left: none !important;
+    border-right: none !important;
+    border-top: none !important;
+  transition: all 0.2s ease;
+}
+
+.card-custom-hover-style:hover {
+    background-color: rgba(0, 0, 0, 0.03);
+    
 }
