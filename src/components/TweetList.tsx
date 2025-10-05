@@ -1,49 +1,51 @@
 import React, { useEffect, useRef, useCallback } from 'react';
 import { observer } from 'mobx-react-lite';
+import { Empty, Space,Typography } from '@arco-design/web-react';
+import { tweetListStore } from '../store/TweetListStore';
+import TweetItem from './TweetItem';
 import { debounce } from 'lodash';
 import './TweetList.css';
-// import { tweetStore } from '../stores/TweetStore';
-import TweetItem from './TweetItem';
-const tweetStore = {
-  tweets: [
-  {
-    content: '这是一条推文',
-    avatar: '用户A',
-  },
-  {
-    content: '这是另一条推文',
-    avatar: '用户B',
-  },  
-],
-}
+
+const {Text} = Typography
+
 const TweetList = () => {
-  const observerRef = useRef<HTMLDivElement>(null);
-  
-  // 初始化
-  useEffect(() => {
-    // tweetStore.loadInitialTweets();
-  }, []);
-  
-  const handleScroll = useCallback(debounce(() => {
-    if (!observerRef.current) return;
+    const observerRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        tweetListStore.loadTweets();
+    }, []);
+    console.log(tweetListStore.tweets)
+    const handleScroll = useCallback(debounce(() => {
+        if (!observerRef.current) return;
     
-    const { scrollTop, scrollHeight, clientHeight } = observerRef.current;
+        const { scrollTop, scrollHeight, clientHeight } = observerRef.current;
     
-    if (scrollHeight - scrollTop - clientHeight < 200) {
-    //   tweetStore.loadMoreTweets();
+        if (scrollHeight - scrollTop - clientHeight < 20) {
+            tweetListStore.loadMoreTweets();
+        }
+    }, 100), []);
+
+    useEffect(() => {
+        const currentRef = observerRef.current;
+        if (currentRef) {
+            currentRef.addEventListener('scroll', handleScroll);
+            return () => {
+                currentRef.removeEventListener('scroll', handleScroll);
+            };
+        }
+    }, [handleScroll]);
+
+    if (tweetListStore.tweets.length === 0 && !tweetListStore.isLoading) {
+        return (
+            <div style={{ padding: '48px 0', textAlign: 'center' }}>
+                <Empty 
+                    description={
+                        <Text>还没有推文，发布你的第一条推文吧！</Text>
+                    }
+                />
+            </div>
+        );
     }
-  }, 100), []);
-  
-  // 设置滚动监听
-  useEffect(() => {
-    const currentRef = observerRef.current;
-    if (currentRef) {
-      currentRef.addEventListener('scroll', handleScroll);
-      return () => {
-        currentRef.removeEventListener('scroll', handleScroll);
-      };
-    }
-  }, [handleScroll]);
 
   return (
     <div 
@@ -52,32 +54,31 @@ const TweetList = () => {
       style={{ maxHeight: 'calc(100vh - 200px)' }}
     >
       <div className="space-y-2 p-1">
-        {tweetStore.tweets.map(tweet => (
+        {tweetListStore.tweets.map(tweet => (
           <TweetItem key={tweet.content} tweet={tweet} />
         ))}
       </div>
       
-      {/* 加载中状态 */}
-      {/* {tweetStore.isLoading && (
-        <div className="flex justify-center items-center py-8">
-          <div className="animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 border-blue-500"></div>
-          <span className="ml-3 text-gray-600">加载更多推文...</span>
-        </div>
-      )} */}
+        {/* 加载中状态 */}
+        {tweetListStore.isLoading && (
+            <div style={{ textAlign: 'center', padding: '32px 0' }}>
+            <Space size="medium">
+                <Text>加载更多推文...</Text>
+            </Space>
+            </div>
+        )}
       
-      {/* 没有更多内容 */}
-      {/* {!tweetStore.isLoading && !tweetStore.hasMore && tweetStore.tweets.length > 0 && (
-        <div className="text-center py-6 text-gray-500 border-t border-gray-200">
-          已经到底啦，没有更多内容了
-        </div>
-      )} */}
-      
-      {/* 空状态 */}
-      {/* {!tweetStore.isLoading && tweetStore.tweets.length === 0 && (
-        <div className="text-center py-12 text-gray-500">
-          还没有推文，发布你的第一条推文吧！
-        </div>
-      )} */}
+        {/* 没有更多内容 */}
+        {!tweetListStore.isLoading && !tweetListStore.hasMore && tweetListStore.tweets.length > 0 && (
+            <div style={{ 
+                textAlign: 'center', 
+                padding: '24px 0', 
+                color: '#86909C',
+                borderTop: '1px solid #e5e6eb'
+            }}>
+                <Text>已经到底啦，没有更多内容了</Text>
+            </div>
+        )}
     </div>
   );
 };

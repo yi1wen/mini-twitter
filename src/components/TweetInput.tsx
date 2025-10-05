@@ -1,49 +1,39 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { observer } from 'mobx-react-lite';
+import { Button, Typography, Avatar, Divider } from '@arco-design/web-react';
+import { inputStore } from '../store/TweetInputStore';
 import './TweetInput.css';
-import { Divider, Button, Avatar, Space } from '@arco-design/web-react';
+
+const { Text } = Typography;
 
 const TweetInput = () => {
-  const [content, setContent] = useState('');
-  const [charCount, setCharCount] = useState(0);
+    const handleChange = (value: string) => {
+        inputStore.setContent(value);
+    };
+    const handlePublish = () => {
+        inputStore.publishTweet();
+    };
 
-  useEffect(() => {
-    setCharCount(content.length);
-  }, [content]);
-
-  const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-      setContent(e.target.value);
-      setTextareaRows(e.target.value.split('\n').length < 4 ? 4 : e.target.value.split('\n').length);
-  };
-  const handlePublish = () => {
-    if (content.trim()) {
-      // tweetStore.publishTweet(content);
-      setContent('');
-    }
-  };
-
-
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-    if (e.key === 'Enter' && !e.shiftKey) {
-      e.preventDefault();
-      handlePublish();
-    }
-  };
-
-  const [textareaRows, setTextareaRows] = useState<number>(4);
+    // 回车键发布
+    const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+        if (e.key === 'Enter' && !e.shiftKey) {
+            e.preventDefault();
+            handlePublish();
+        }
+    };
 
   return (
     <div className="input-container">
       <div className="input-textarea-container">
         <Avatar>You</Avatar>
         <textarea
-        className="input-textarea"
-        style={{ resize: 'none', border: 'none', outline: 'none' }}
-        placeholder="分享你的想法..."
-        rows={textareaRows}
-        value={content}
-        onChange={handleChange}
-        // onKeyDown={handleKeyDown}
+          className="input-textarea"
+          style={{ resize: 'none', border: 'none', outline: 'none' }}
+          placeholder="分享你的想法..."
+          rows={inputStore.textareaRows}
+          value={inputStore.content}
+          onChange={(e)=>{handleChange(e.target.value)}}
+          onKeyDown={handleKeyDown}
       />
       </div>
       
@@ -51,7 +41,7 @@ const TweetInput = () => {
       <Button
         shape="round"
         onClick={handlePublish}
-        disabled={!content.trim()}
+        disabled={!inputStore.content.trim()}
       >
         发布
       </Button>

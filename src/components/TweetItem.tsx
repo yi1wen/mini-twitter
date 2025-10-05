@@ -1,28 +1,26 @@
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { Avatar, Button } from '@arco-design/web-react';
-import { IconHeart, IconMessage, IconForward, IconEye } from '@arco-design/web-react/icon';
+import { IconHeart, IconMessage, IconEye, IconHeartFill } from '@arco-design/web-react/icon';
 import './TweetItem.css';
-// import { Tweet } from '../stores/TweetStore';
+import { TweetStore } from '../store/TweetStore';
 
 interface TweetItemProps {
-  tweet: {
-    content: string;
-    avatar: string;
-  }
+  tweet: TweetStore
 }
 
 const TweetItem = (
-    { tweet: { content, avatar } }: TweetItemProps
+    { tweet }: TweetItemProps
 ) => {
+  const {toggleLike} = tweet
   return (
     <div className="tweet-item">
       <div className="item-content">
-        <Avatar>{avatar}</Avatar>
-        <div className="item-text">{content}</div>
+        <Avatar>{tweet.avatar}</Avatar>
+        <div className="item-text">{tweet.content}</div>
       </div>
       <div className="item-actions">
-        <Button type="text" shape="circle" icon={<IconHeart />}></Button>
+        <Button type="text" shape="circle" icon={tweet.isLiked?<IconHeartFill />:<IconHeart />} onClick={()=>{toggleLike()}}></Button>
         <Button type="text" shape="circle" icon={<IconMessage />}></Button>
         <Button type="text" shape="circle" icon={<IconEye />}></Button>
       </div>
