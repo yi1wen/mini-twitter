@@ -2,5 +2,21 @@
   text-align: center;
   width: 50%;
   margin: 0 auto;
+  background-color: rgba(0, 0, 0, 0.02);
 }
 
+.button {
+  position: fixed;
+  bottom: 0;
+  width: 50%;
+  margin-bottom: 20px;
+  background-color:  rgba(0, 0, 0, 0.02);
+}
+
+textarea {
+    resize: none;
+    outline: none;
+    border: none;
+    background-color: transparent;
+    padding-top: 10px;
+}

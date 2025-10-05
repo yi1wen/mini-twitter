@@ -26,6 +26,7 @@ export class TweetStore {
     
         makeAutoObservable(this);
     }
+    
     toggleLike = () => {
         this.isLiked = !this.isLiked;
         this.likes = this.isLiked ? this.likes + 1 : this.likes - 1;

@@ -1,19 +1,23 @@
 .input-container {
-    position: fixed;
-    bottom: 0;
-    width: 50%;
     border: 1px solid #ccc;
     border-radius: 5px;
+    position: fixed;
+    top: 50px;
+    width: calc(50% - 20px);
+    z-index: 100;
+    margin: 0 10px;
+    background-color: #fff;
     padding: 10px;
 }
 
 .input-textarea {
     flex: 1;
     
-    resize: none;
-    outline: none;
+    
     margin-left: 10px;
 }
+
+
 
 .input-textarea-container {
     width: 100%;
